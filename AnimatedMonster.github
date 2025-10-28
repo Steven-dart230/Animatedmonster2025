@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Bouncy Monster</title>
+</head>
+<body>
+  <h1>The Bouncy Monster</h1>
+  <p>This monster bounces, blinks, and wiggles its mouth! It lives in a purple-blue body with a glowing yellow antenna. Call him Floppo!</p>
+
+  <!-- p5.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+
+  <!-- Your sketch -->
+  <script>
+    let eyeY = 200;       
+    let speed = 3;        
+    let rotation = 0;     
+    let blink = 0;       
+
+    function setup() {
+      createCanvas(400, 600);
+      rectMode(CENTER);
+      angleMode(DEGREES);
+    }
+
+    function draw() {
+      background(50, 50, 80);
+
+      // Monster Movement
+      eyeY += speed;
+      if (eyeY > 220 || eyeY < 180) {
+        speed = -speed;
+      }
+
+      // Body
+      noStroke();
+      fill(180, 100, 255); // purple-blue
+      ellipse(200, 300, 250, 300);
+
+      // Belly
+      fill(230, 180, 255);
+      ellipse(200, 330, 160, 180);
+
+      // Head bounce
+      push();
+      translate(200, eyeY);
+      fill(100, 200, 255);
+      ellipse(0, 0, 200, 180);
+
+      // Antennae
+      push();
+      rotate(rotation);
+      stroke(255);
+      strokeWeight(4);
+      line(-40, -100, -60, -160);
+      line(40, -100, 60, -160);
+      noStroke();
+      fill(255, 220, 100);
+      ellipse(-60, -160, 20, 20);
+      ellipse(60, -160, 20, 20);
+      pop();
+
+      // Eyes
+      let blinkVal = abs(sin(frameCount * 0.1));
+      fill(255);
+      ellipse(-40, -20, 40, 30 * blinkVal + 5);
+      ellipse(40, -20, 40, 30 * blinkVal + 5);
+
+      // Pupils
+      fill(0);
+      ellipse(-40, -20, 12, 12 * blinkVal + 2);
+      ellipse(40, -20, 12, 12 * blinkVal + 2);
+
+      // Mouth
+      stroke(0);
+      strokeWeight(3);
+      noFill();
+      let smileWiggle = sin(frameCount * 2) * 4;
+      arc(0, 20 + smileWiggle, 60, 40, 0, 180);
+
+      pop();
+
+      // Rotating rectangle
+      push();
+      translate(200, 420);
+      rotate(rotation);
+      fill(255, 150, 120);
+      rect(0, 0, 180, 30, 10);
+      pop();
+
+      rotation += 2;
+
+      // Ground
+      fill(20, 180, 90);
+      rect(200, 580, 400, 80);
+    }
+  </script>
+</body>
+</html>
